@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Anagrams{
 
+	private static final String DELIMITER = "-";
+
      List<String> getWordsFromFile(String path) throws IOException {
          FileReader file = new FileReader(path);
          BufferedReader reader = new BufferedReader(file);
@@ -26,6 +28,15 @@ public class Anagrams{
         
         return sorted;
      }
+	 
+	 public static String combinedWord(String originalWord) {
+         String sortedWord = sortString(originalWord);
+         return sortedWord + DELIMITER + originalWord;
+     }
+     
+     public static String deCombineWord(String combinedWord) {
+         return combinedWord.split(DELIMITER)[1];
+	 }
      
      public static void main(String []args){
         
