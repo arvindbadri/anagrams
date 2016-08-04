@@ -4,13 +4,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Anagrams{
 
 	private static final String DELIMITER = "-";
 
-     List<String> getWordsFromFile(String path) throws IOException {
+     static List<String> getWordsFromFile(String path) throws IOException {
          FileReader file = new FileReader(path);
          BufferedReader reader = new BufferedReader(file);
          List<String> lines = new ArrayList<>();
@@ -53,10 +54,35 @@ public class Anagrams{
      public static String getOriginalWord(String combinedWord) {
          return combinedWord.split(DELIMITER)[1];
 	 }
+
+	 public static List<List<String>> separateAnagrams (List<String> combinedWords) {
+	     Collections.sort(combinedWords);
+         List<List<String>> anagramsOfAllWords = new ArrayList<List<String>> ();
+         List<String> anagramsOfSingleWord = new ArrayList<String> ();
+         for (int i = 0; i < combinedWords.size() - 1; i++) {
+             String sortedPartCurr = combinedWords.get(i).split(DELIMITER)[0];
+             String sortedPartNext = combinedWords.get(i + 1).split(DELIMITER)[0];
+             anagramsOfSingleWord.add(getOriginalWord(combinedWords.get(i)));
+             if (!(sortedPartCurr.equals(sortedPartNext))) {
+                 if (anagramsOfSingleWord.size() != 1) {
+                     anagramsOfAllWords.add(anagramsOfSingleWord);
+                     anagramsOfSingleWord.clear();
+                 }
+             }
+
+         }
+         return anagramsOfAllWords;
+     }
      
      public static void main(String []args){
-        
-        
+        try {
+            List<List<String>> separateAnagrams = separateAnagrams(getCombinedWordList(getWordsFromFile("C:\\Users\\abadrinath\\IdeaProjects\\Training\\src\\test.txt")));
+            for (List<String> list : separateAnagrams) {
+                System.out.println(list);
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
      }
      
 }
