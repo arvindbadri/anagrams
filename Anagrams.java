@@ -28,13 +28,29 @@ public class Anagrams{
         
         return sorted;
      }
+
+     public static List<String> getCombinedWordList (List<String> originalWordList) {
+         List<String> combinedWordList = new ArrayList<>();
+         for (String word : originalWordList) {
+             combinedWordList.add(getCombinedWord(word));
+         }
+         return combinedWordList;
+     }
+
+     public static List<String> getOriginalWordList(List<String> combinedWordList) {
+         List<String> originalWordList = new ArrayList<> ();
+         for (String word : combinedWordList) {
+             originalWordList.add(getOriginalWord(word));
+         }
+         return combinedWordList;
+     }
 	 
-	 public static String combinedWord(String originalWord) {
+	 public static String getCombinedWord(String originalWord) {
          String sortedWord = sortString(originalWord);
          return sortedWord + DELIMITER + originalWord;
      }
      
-     public static String deCombineWord(String combinedWord) {
+     public static String getOriginalWord(String combinedWord) {
          return combinedWord.split(DELIMITER)[1];
 	 }
      
